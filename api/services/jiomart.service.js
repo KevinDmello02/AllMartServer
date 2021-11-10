@@ -21,14 +21,12 @@ exports.getProductDetails = async function (body) {
 async function scrapeData(searchKey) {
     const browser = await puppeteer.launch({
         defaultViewport: false,
-        slowMo: 250,
         args: ['--no-sandbox']
     });
 
     const page = await browser.newPage();
     await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey);
-
-    await page.screenshot({ path: 'image.png' });
+    await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
 
     const pageData = await page.evaluate(() => {
         return {
@@ -36,7 +34,9 @@ async function scrapeData(searchKey) {
             width: document.documentElement.clientWidth,
             height: document.documentElement.clientHeight
         }
-    })
+    });
+
+    console.log('Page Data =====================>', pageData.html);
 
     const $ = cheerio.load(pageData.html);
     let list = [];
@@ -73,6 +73,8 @@ async function scrapeData(searchKey) {
     // console.log(newElement.text());
 
     let formatedData = formatArray(list, price, images);
+
+    console.log(list);
 
     await browser.close();
 
