@@ -40,14 +40,14 @@ async function scrapeData(searchKey) {
         }
     });
 
-    console.log('Page Data =====================>', pageData.html);
+    // console.log('Page Data =====================>', pageData.html);
 
     const $ = cheerio.load(pageData.html);
     let list = [];
     let price = [];
     let images = [];
     const element = $('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div, a').find('a').each(function (index, element) {
-        // console.log($(element).children('.clsgetname').text());
+        console.log($(element).children('.clsgetname').text());
         // list.push($(element).attr('title'));
         list.push($(element).children('span.clsgetname').text());
     });
@@ -56,11 +56,11 @@ async function scrapeData(searchKey) {
     const element1 = $('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div, a').find('.cat-img').each(function (index, element) {
         // console.log($(element));
         // list.push($(element).attr('title'));
-        // console.log($(element).children('img').attr('src'));
+        console.log($(element).children('img').attr('src'));
         images.push($(element).children('img').attr('src'));
     });
     const element3 = $('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item, div').find('.price-box').each(function (index, element) {
-        // console.log($(element).children('#final_price').text());
+        console.log($(element).children('#final_price').text());
         // console.log($(element).children('#price').text());
 
         price.push($(element).children('#final_price').text());
@@ -76,13 +76,13 @@ async function scrapeData(searchKey) {
     // console.log(element.text());
     // console.log(newElement.text());
 
-    let formatedData = formatArray(list, price, images);
+    // let formatedData = formatArray(list, price, images);
 
     console.log(list);
 
     await browser.close();
 
-    return formatedData;
+    return 'data';
 }
 
 function formatArray(list, price, images) {
