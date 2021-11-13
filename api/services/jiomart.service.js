@@ -25,8 +25,12 @@ async function scrapeData(searchKey) {
     });
 
     const page = await browser.newPage();
-    await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey);
-    await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
+    // await page.setDefaultNavigationTimeout(0);
+    await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey, {
+        waitUntil: 'load',
+        timeout: 0
+    });
+    // await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
 
     const pageData = await page.evaluate(() => {
         return {
