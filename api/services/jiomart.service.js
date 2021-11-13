@@ -40,12 +40,13 @@ async function scrapeData(searchKey) {
         }
     });
 
-    // console.log('Page Data =====================>', pageData.html);
+    console.log('Page Data =====================>', pageData.html);
 
     const $ = cheerio.load(pageData.html);
     let list = [];
     let price = [];
     let images = [];
+
     const element = $('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div, a').find('a').each(function (index, element) {
         console.log($(element).children('.clsgetname').text());
         // list.push($(element).attr('title'));
