@@ -39,8 +39,9 @@ async function scrapeData(searchKey) {
             height: document.documentElement.clientHeight
         }
     });
-
-    console.log('Page Data =====================>', pageData.html);
+    console.log('Page Data =====================>', pageData.width);
+    console.log('Page Data =====================>', pageData.height);
+    // console.log('Page Data =====================>', pageData.html);
 
     const $ = cheerio.load(pageData.html);
     let list = [];
@@ -83,7 +84,7 @@ async function scrapeData(searchKey) {
 
     await browser.close();
 
-    return 'data';
+    return pageData.html;
 }
 
 function formatArray(list, price, images) {
