@@ -21,8 +21,8 @@ exports.getProductDetails = async function (body) {
 async function scrapeData(searchKey) {
     const browser = await puppeteer.launch({
         defaultViewport: false,
-        headless: true,
-        args: ['--use-gl=egl'],
+        // headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
         // args: ['--no-sandbox']
     });
 
