@@ -28,9 +28,9 @@ async function scrapeData(searchKey) {
     // await page.setDefaultNavigationTimeout(0);
     await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey, {
         waitUntil: 'load',
-        timeout: 0
+        // timeout: 0
     });
-    await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
+    // await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
 
     const pageData = await page.evaluate(() => {
         return {
