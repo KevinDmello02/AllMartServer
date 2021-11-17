@@ -78,13 +78,13 @@ async function scrapeData(searchKey) {
     // console.log(element.text());
     // console.log(newElement.text());
 
-    // let formatedData = formatArray(list, price, images);
+    let formatedData = formatArray(list, price, images);
 
     console.log(list);
 
     await browser.close();
 
-    return pageData.html;
+    return formatedData;
 }
 
 function formatArray(list, price, images) {
