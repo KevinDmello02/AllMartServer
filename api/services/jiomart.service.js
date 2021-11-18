@@ -97,9 +97,7 @@ async function scrapeData(searchKey) {
 
     let formatedData = formatArray(list, price, images);
 
-    console.log();
-
-    await browser.close();
+    console.log(formatedData);
 
     return pageData.html;
 }
@@ -124,7 +122,8 @@ function formatArray(list, price, images) {
 
         }
         formatedData.push(obj);
-    })
+    });
+    
 
     return formatedData;
 }
