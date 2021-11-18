@@ -26,7 +26,7 @@ async function scrapeData(searchKey) {
         // args: ["--disable-setuid-sandbox"],
         // args: ['--no-sandbox']
         headless: true,
-        slowMo: 1,
+        slowMo: 250,
         args: [
           "--no-sandbox",
           "--disable-setuid-sandbox",
