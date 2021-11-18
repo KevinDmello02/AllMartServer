@@ -23,13 +23,14 @@ async function scrapeData(searchKey) {
         defaultViewport: false,
         headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // args: ["--disable-setuid-sandbox"],
         // args: ['--no-sandbox']
     });
 
     const page = await browser.newPage();
     // await page.setDefaultNavigationTimeout(0);
     await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey, {
-        waitUntil: 'domcontentloaded',
+        waitUntil: 'networkidle0',
         // timeout: 0
     });
     // await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
