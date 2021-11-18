@@ -47,6 +47,8 @@ async function scrapeData(searchKey) {
     });
     // await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
 
+    const pages = page.content();
+
     const pageData = await page.evaluate(() => {
         return {
             html: document.documentElement.innerHTML,
@@ -99,7 +101,7 @@ async function scrapeData(searchKey) {
 
     console.log(formatedData);
 
-    return pageData.html;
+    return pages;
 }
 
 function formatArray(list, price, images) {
