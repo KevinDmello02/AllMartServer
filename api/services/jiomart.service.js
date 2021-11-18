@@ -42,7 +42,7 @@ async function scrapeData(searchKey) {
     await page.setUserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36");
     // await page.setDefaultNavigationTimeout(0);
     await page.goto('https://www.jiomart.com/catalogsearch/result?q='+searchKey, {
-        waitUntil: 'networkidle0',
+        waitUntil: 'networkidle2',
         // timeout: 0
     });
     // await page.waitForSelector('.ais-InfiniteHits > .ais-InfiniteHits-list > .ais-InfiniteHits-item > div');
