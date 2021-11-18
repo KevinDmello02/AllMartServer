@@ -20,11 +20,22 @@ exports.getProductDetails = async function (body) {
 
 async function scrapeData(searchKey) {
     const browser = await puppeteer.launch({
-        defaultViewport: false,
-        headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        // defaultViewport: false,
+        // headless: false,
+        // args: ['--no-sandbox', '--disable-setuid-sandbox'],
         // args: ["--disable-setuid-sandbox"],
         // args: ['--no-sandbox']
+        headless: true,
+        slowMo: 1,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--disable-gpu",
+          "--disable-dev-shm-usage",
+          "--no-first-run",
+          "--no-zygote",
+          "--start-fullscreen",
+        ],
     });
 
     const page = await browser.newPage();
