@@ -3,11 +3,43 @@ const Q = require('q');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
+const request = require('request'); 
+
 exports.getProductDetails = async function (body) {
 	var deferred = Q.defer();
     console.log('inside getProductDetails service');
-    console.log(body.searchKey);
-    let searchResults = await scrapeData(body.searchKey);
+    // console.log(body.searchKey);
+    // let searchResults = await scrapeData(body.searchKey);
+
+    let bigBazzarBody = {
+        "filters": [],
+        "pageNo": "1",
+        "perPage": "16",
+        "searchTerm": "sugar",
+        "storeCode": "5538"
+    }
+    let searchResults;
+
+    // request.post('https://express.shop.bigbazaar.com/express/product/search/lite', bigBazzarBody)
+    // .on('response', function(res) {
+    //     console.log(res);
+    //     searchResults = res;
+    // })
+
+    // request.get('https://digital.dmart.in/api/v1/search/sugar?page=1&size=40')
+    // .on('response', function(res) {
+    //     console.log(res.body);
+    //     searchResults = res;
+    // })
+
+    request.post({
+        headers: { 'Access-Control-Allow-Origin': '*'},
+        url: 'https://express.shop.bigbazaar.com/express/product/search/lite',
+        json: bigBazzarBody
+      }, function(error, response, body){
+        console.log(body);
+        searchResults = body;
+      });
 
     if (searchResults) {
         deferred.resolve(searchResults);
