@@ -8,44 +8,27 @@ const request = require('request');
 exports.getProductDetails = async function (body) {
 	var deferred = Q.defer();
     console.log('inside getProductDetails service');
-    // console.log(body.searchKey);
-    // let searchResults = await scrapeData(body.searchKey);
 
-    let bigBazzarBody = {
-        "filters": [],
-        "pageNo": "1",
-        "perPage": "16",
-        "searchTerm": "sugar",
-        "storeCode": "5538"
+    let jioMartBody = {
+        "requests": [
+            {
+                "indexName": "prod_mart_master_vertical",
+                "params": "query=" + body.searchKey
+            }
+        ]
     }
-    let searchResults;
-
-    // request.post('https://express.shop.bigbazaar.com/express/product/search/lite', bigBazzarBody)
-    // .on('response', function(res) {
-    //     console.log(res);
-    //     searchResults = res;
-    // })
-
-    // request.get('https://digital.dmart.in/api/v1/search/sugar?page=1&size=40')
-    // .on('response', function(res) {
-    //     console.log(res.body);
-    //     searchResults = res;
-    // })
 
     request.post({
         headers: { 'Access-Control-Allow-Origin': '*'},
-        url: 'https://express.shop.bigbazaar.com/express/product/search/lite',
-        json: bigBazzarBody
+        url: 'https://3yp0hp3wsh-dsn.algolia.net/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(3.33.0)%3B%20Browser%3B%20instantsearch.js%20(4.33.2)%3B%20JS%20Helper%20(3.6.2)&x-algolia-application-id=3YP0HP3WSH&x-algolia-api-key=aace3f18430a49e185d2c1111602e4b1',
+        json: jioMartBody
       }, function(error, response, body){
-        console.log(body);
-        searchResults = body;
+        if (error) {
+            deferred.resolve({ message: 'Error getProductDetails Jiomart' });
+        } else {
+            deferred.resolve(body);
+        }
       });
-
-    if (searchResults) {
-        deferred.resolve(searchResults);
-    } else {
-        deferred.resolve({ message: 'Error while scraping' });
-    }
     
     return deferred.promise;
 }
