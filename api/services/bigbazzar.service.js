@@ -1,6 +1,7 @@
 const Q = require('q');
 
-const request = require('request'); 
+const request = require('request');
+const bigbazaarDao = require('../dao/bigbazzar.dao');
 
 exports.getProductDetails = async function (body) {
 	var deferred = Q.defer();
@@ -16,17 +17,30 @@ exports.getProductDetails = async function (body) {
         "storeCode": "5538"
     }
 
-    await request.post({
-        headers: { 'Access-Control-Allow-Origin': '*'},
-        url: 'https://express.shop.bigbazaar.com/express/product/search/lite',
-        json: bigBazzarBody
-      }, function(error, response, body) {
-        if (error) {
-            deferred.resolve({ message: 'Error getProductDetails Bigbazzar' });
+    bigbazaarDao.getProductDetails(bigBazzarBody).then(function (result) {
+        console.log(result);
+        
+        if (result) {
+            // deferred.resolve(result);
+            
+            let transformedData = [];
+
+            result.forEach(element => {
+                let obj = {
+                    product_name: element.name + ' - ' + element.name,
+                    image: element.images,
+                    skus: element.simples
+                }
+
+                transformedData.push(obj);
+            });
+
+            deferred.resolve(transformedData);
+
         } else {
-            deferred.resolve(body.responseData.results);
+            deferred.resolve({ 'Error': 'Error while fetching data.' })
         }
-      });
+    });
     
     return deferred.promise;
 }
